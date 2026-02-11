@@ -60,9 +60,9 @@ pub enum Effect {
 }
 
 #[derive(Default)]
-pub struct Counter;
+pub struct Case;
 
-impl App for Counter {
+impl App for Case {
     type Model = Model;
     type Event = Event;
     type ViewModel = ViewModel;
@@ -146,7 +146,7 @@ mod tests {
         testing::ResponseBuilder,
     };
 
-    use super::{Counter, Event, Model};
+    use super::{Case, Event, Model};
     use crate::{
         Count, Effect,
         sse::{SseRequest, SseResponse},
@@ -157,7 +157,7 @@ mod tests {
     /// counter value from the web API
     #[test]
     fn get_counter() {
-        let app = Counter;
+        let app = Case;
         let mut model = Model::default();
 
         // send a `Get` event to the app
@@ -233,7 +233,7 @@ mod tests {
     // Test that an `Increment` event causes the app to increment the counter
     #[test]
     fn increment_counter() {
-        let app = Counter;
+        let app = Case;
 
         // set up our initial model as though we've previously fetched the counter
         let mut model = Model {
@@ -310,7 +310,7 @@ mod tests {
     /// Test that a `Decrement` event causes the app to decrement the counter
     #[test]
     fn decrement_counter() {
-        let app = Counter;
+        let app = Case;
 
         // set up our initial model as though we've previously fetched the counter
         let mut model = Model {
@@ -386,7 +386,7 @@ mod tests {
 
     #[test]
     fn server_sent_events() {
-        let app = Counter;
+        let app = Case;
         let mut model = Model::default();
 
         // start a SSE subscription to watch for updates from the server

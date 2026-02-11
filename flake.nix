@@ -79,6 +79,10 @@
               xcodegen
               sourcekit-lsp
 
+              typst
+              typstyle
+              tinymist
+
             ];
 
             env = {
