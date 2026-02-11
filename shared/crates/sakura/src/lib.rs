@@ -7,6 +7,8 @@
 use autosurgeon::{Hydrate, Reconcile};
 use serde::{Deserialize, Serialize};
 
+mod node;
+
 pub use node::Node;
 
 /// A Node Id
