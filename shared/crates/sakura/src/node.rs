@@ -1,11 +1,9 @@
-use std::cmp::Ordering;
-
 use autosurgeon::{Hydrate, Reconcile};
 use serde::{Deserialize, Serialize};
 
 use crate::NodeId;
 
-#[derive(Debug, Serialize, Deserialize, Reconcile, Hydrate)]
+#[derive(Debug, Serialize, Deserialize, Reconcile, Hydrate, Ord, Eq, PartialOrd)]
 pub struct Node<T> {
     pub(crate) data: T,
     pub(crate) parent: Option<NodeId>,
@@ -47,7 +45,7 @@ impl<T> Node<T> {
     ///
     /// let x = 10;
     /// let node: Node<i32> = Node::new(x);
-    /// assert_eq!(node.data(), &10);
+    /// # assert_eq!(node.data(), &10);
     /// ```
     pub const fn data(&self) -> &T {
         &self.data
@@ -60,7 +58,7 @@ impl<T> Node<T> {
     ///
     /// let x = 10;
     /// let mut node: Node<i32> = Node::new(x);
-    /// assert_eq!(node.data_mut(), &mut 10);
+    /// # assert_eq!(node.data_mut(), &mut 10);
     /// ```
     pub const fn data_mut(&mut self) -> &mut T {
         &mut self.data
@@ -80,8 +78,8 @@ impl<T> Node<T> {
     /// let replaced_x = node_x.replace_data(y);
     /// let new_x = node_x.data();
     ///
-    /// assert_eq!(*new_x, y);
-    /// assert_eq!(replaced_x, x);
+    /// # assert_eq!(*new_x, y);
+    /// # assert_eq!(replaced_x, x);
     /// ```
     pub const fn replace_data(&mut self, mut data: T) -> T {
         ::std::mem::swap(&mut data, self.data_mut());
@@ -94,7 +92,7 @@ impl<T> Node<T> {
     /// use sakura::Node;
     ///
     /// let node: Node<i32> = Node::new(1);
-    /// assert_eq!(node.parent(), None);
+    /// # assert_eq!(node.parent(), None);
     /// ```
     pub const fn parent(&self) -> Option<&NodeId> {
         self.parent.as_ref()
@@ -106,23 +104,10 @@ impl<T> Node<T> {
     /// use sakura::Node;
     ///
     /// let node: Node<i32> = Node::new(0);
-    /// assert_eq!(node.children().len(), 0);
+    /// # assert_eq!(node.children().len(), 0);
     /// ```
     pub const fn children(&self) -> &Vec<NodeId> {
         &self.children
-    }
-
-    /// Sorts the children of this `Node` with the `compare` function.
-    /// ```
-    /// use sakura::Node;
-    ///
-    /// todo!("write the test after we can create a node with children")
-    /// ```
-    pub fn sort_children<F>(&mut self, mut compare: F)
-    where
-        F: FnMut(&NodeId, &NodeId) -> Ordering,
-    {
-        self.children.sort_by(|a, b| compare(a, b));
     }
 
     pub(crate) const fn children_mut(&mut self) -> &mut Vec<NodeId> {
@@ -135,21 +120,6 @@ impl<T> Node<T> {
 
     pub(crate) fn add_child(&mut self, child: NodeId) {
         self.children.push(child);
-    }
-
-    pub(crate) fn replace_child(&mut self, old: NodeId, new: NodeId) {
-        let idx = self
-            .children
-            .iter()
-            .enumerate()
-            .find(|&(_, id)| id == &old)
-            .expect("Id should exist inside child")
-            .0;
-
-        let children = self.children_mut();
-
-        children.push(new);
-        children.swap_remove(idx);
     }
 
     pub(crate) fn set_children(&mut self, children: Vec<NodeId>) {
@@ -202,7 +172,7 @@ mod node_tests {
 
         let parent_id: NodeId = NodeId { index: 100 };
 
-        node.set_parent(Some(parent_id));
+        node.set_parent(Some(parent_id.clone()));
 
         assert_eq!(node.parent, Some(parent_id));
     }
@@ -214,7 +184,7 @@ mod node_tests {
 
         let child_id: NodeId = NodeId { index: 1 };
 
-        node.add_child(child_id);
+        node.add_child(child_id.clone());
 
         assert_eq!(node.children.len(), 1);
         assert_eq!(node.children.first().unwrap(), &child_id);

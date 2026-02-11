@@ -2,7 +2,6 @@
 members = [
     "tui",
     "shared",
-
     "shared/crates/sakura"
 ]
 resolver = "3"
