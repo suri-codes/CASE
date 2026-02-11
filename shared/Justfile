@@ -1,0 +1,6 @@
+
+default: dev
+    
+test: 
+    cargo test
+
