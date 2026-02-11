@@ -1,0 +1,27 @@
+name: Case
+packages:
+  Shared:
+    path: ./generated/Shared
+  App:
+    path: ./generated/App
+options:
+  bundleIdPrefix: com.crux.examples.Case
+attributes:
+  BuildIndependentTargetsInParallel: true
+targets:
+  Case:
+    type: application
+    platform: iOS
+    deploymentTarget: 18.0
+    sources: [Case]
+    dependencies:
+      - package: Shared
+      - package: App
+    info:
+      path: Case/Info.plist
+      properties:
+        UISupportedInterfaceOrientations:
+          - UIInterfaceOrientationPortrait
+          - UIInterfaceOrientationLandscapeLeft
+          - UIInterfaceOrientationLandscapeRight
+        UILaunchScreen: {}

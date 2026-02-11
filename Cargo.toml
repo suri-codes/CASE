@@ -1,0 +1,24 @@
+[workspace]
+members = [
+    "tui",
+    "shared",
+]
+resolver = "3"
+
+[workspace.package]
+authors = ["suri-codes <suri312006@gmail.com>"]
+edition = "2024"
+repository = "https://github.com/suri-codes/CASE/"
+license = "MIT"
+rust-version = "1.93"
+
+[workspace.dependencies]
+anyhow = "1.0.100"
+crux_core = "0.17.0-rc2"
+crux_http = "0.16.0-rc2"
+serde = "1.0.228"
+
+[workspace.metadata.bin]
+cargo-xcode = {version = "=1.7.0"}
+cargo-swift = {version = "=0.9.0"}
+

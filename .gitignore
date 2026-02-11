@@ -1,0 +1,7 @@
+target/
+
+iOS/generated
+iOS/Case.xcodeproj
+
+.direnv/
+.bin/
