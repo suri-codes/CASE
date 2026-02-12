@@ -3265,6 +3265,8 @@ version = "0.1.0"
 dependencies = [
  "async-sse",
  "async-std",
+ "automerge",
+ "autosurgeon",
  "chrono",
  "clap",
  "crux_core",

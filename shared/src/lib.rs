@@ -3,6 +3,9 @@ pub mod app;
 mod ffi;
 pub mod sse;
 
+/// Data structures
+pub mod types;
+
 pub use app::*;
 pub use crux_core::Core;
 pub use crux_http as http;
