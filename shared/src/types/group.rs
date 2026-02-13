@@ -3,24 +3,21 @@ use std::cmp::Ordering;
 use autosurgeon::{Hydrate, Reconcile};
 use serde::{Deserialize, Serialize};
 
-use crate::types::{DueDateTime, Priority};
+use crate::types::Priority;
 
 #[derive(Debug, Serialize, Deserialize, Hydrate, Reconcile, PartialEq, Eq)]
-pub struct Task {
+pub struct Group {
     name: String,
-    due: DueDateTime,
     priority: Priority,
-    description: String,
-    finished: bool,
 }
 
-impl Ord for Task {
+impl Ord for Group {
     fn cmp(&self, other: &Self) -> Ordering {
         self.priority.p_value().cmp(&other.priority.p_value())
     }
 }
 
-impl PartialOrd for Task {
+impl PartialOrd for Group {
     fn partial_cmp(&self, other: &Self) -> Option<Ordering> {
         Some(self.cmp(other))
     }
