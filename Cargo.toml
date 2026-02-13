@@ -1,6 +1,6 @@
 [workspace]
 members = [
-    "tui",
+    "case-tui",
     "shared",
     "shared/crates/sakura"
 ]

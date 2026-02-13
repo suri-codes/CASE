@@ -18,12 +18,11 @@ pub enum CaseNode {
 impl CaseTree {
     /// # Errors
     /// could error if the parent node is invalid!
-    pub fn insert(&mut self, node: CaseNode, parent: &NodeId) -> crate::Result<()> {
+    pub fn insert(&mut self, node: CaseNode, parent: &NodeId) -> crate::Result<NodeId> {
         let node = Node::new(node);
 
-        self.tree
-            .insert(node, sakura::InsertBehavior::UnderNode(parent))?;
-
-        Ok(())
+        Ok(self
+            .tree
+            .insert(node, sakura::InsertBehavior::UnderNode(parent))?)
     }
 }
