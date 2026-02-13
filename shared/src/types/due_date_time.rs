@@ -1,15 +1,25 @@
 use std::ops::Deref;
 
-use autosurgeon::{Hydrate, Reconcile, reconcile::NoKey};
-use chrono::{NaiveDateTime, format::StrftimeItems};
+use autosurgeon::{reconcile::NoKey, Hydrate, Reconcile};
+use chrono::{format::StrftimeItems, NaiveDateTime};
 use serde::{Deserialize, Serialize};
 
+/// Representation of a Due Date.
+///
+/// Currently, if there is a due date, it will be a
+/// `NaiveDateTime`, mainly because I didn't want to deal with
+/// implementing selecting a `date_time` on the user end. Also I'm guessing
+/// that a majority of users probably don't are about the timezone of their tasks
+///
+/// NOTE: We create our own type to get past rust's orphan rule.
 #[derive(Clone, Serialize, Deserialize, Debug, PartialEq, Eq)]
 pub struct DueDateTime(Option<NaiveDateTime>);
 
 impl DueDateTime {
-    //TODO: could make this take in a string and then return a parse error for all
+    // TODO: could make this take in a string and then return
+    // a parse error for all
     // of our supported datetime stuff.
+    #[allow(dead_code)]
     pub(crate) const fn new(inner: Option<NaiveDateTime>) -> Self {
         Self(inner)
     }
@@ -62,10 +72,10 @@ impl Deref for DueDateTime {
 #[cfg(test)]
 mod tests {
     use automerge::AutoCommit;
-    use autosurgeon::{Hydrate, Reconcile, hydrate, reconcile};
-    use chrono::{Local, NaiveDate, NaiveDateTime, NaiveTime};
+    use autosurgeon::{hydrate, reconcile, Hydrate, Reconcile};
+    use chrono::{NaiveDate, NaiveDateTime, NaiveTime};
 
-    use crate::data::DueDateTime;
+    use super::DueDateTime;
 
     #[test]
     fn reconcile_due_date_time() {
