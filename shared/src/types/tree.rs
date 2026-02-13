@@ -10,17 +10,20 @@ pub struct CaseTree {
 }
 
 #[derive(Debug, Serialize, Deserialize, Hydrate, Reconcile)]
-enum CaseNode {
+pub enum CaseNode {
     Task(Task),
     Group(Group),
 }
 
 impl CaseTree {
-    pub fn insert(&mut self, node: CaseNode, parent: &NodeId) {
+    /// # Errors
+    /// could error if the parent node is invalid!
+    pub fn insert(&mut self, node: CaseNode, parent: &NodeId) -> crate::Result<()> {
         let node = Node::new(node);
 
         self.tree
-            .insert(node, sakura::InsertBehavior::UnderNode(parent))
-            .unwrap();
+            .insert(node, sakura::InsertBehavior::UnderNode(parent))?;
+
+        Ok(())
     }
 }

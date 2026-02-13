@@ -48,6 +48,7 @@ wasm-bindgen = { version = "0.2.106", optional = true }
 automerge = "0.7.3"
 autosurgeon = "0.10.1"
 color = { version = "0.3.2", features = ["serde"] }
+thiserror = "2.0.18"
 
 [dev-dependencies]
 insta = { version = "1.46.0", features = ["yaml"] }

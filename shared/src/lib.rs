@@ -1,12 +1,26 @@
+//! Lmoa
+//!
+//!
+//!
+
+/// App code
 pub mod app;
+pub use app::*;
+
 #[cfg(any(feature = "wasm_bindgen", feature = "uniffi"))]
+/// FFI bindings for the crate
 mod ffi;
+
+/// Server sent events, will be removed
 pub mod sse;
 
 /// Data structures
 pub mod types;
 
-pub use app::*;
+/// Errors
+mod error;
+pub use error::*;
+
 pub use crux_core::Core;
 pub use crux_http as http;
 
