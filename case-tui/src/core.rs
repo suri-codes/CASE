@@ -1,4 +1,4 @@
-use anyhow::{Result, anyhow};
+use color_eyre::{Result, eyre::eyre};
 use crossbeam_channel::Sender;
 use futures::TryStreamExt;
 use std::sync::Arc;
@@ -11,10 +11,14 @@ use crate::{http, sse};
 
 pub type Core = Arc<shared::Core<Counter>>;
 
+#[must_use]
 pub fn new() -> Core {
     Arc::new(shared::Core::new())
 }
 
+/// # Errors
+///
+/// Can error if processing an effect fails.
 pub fn update(core: &Core, event: Event, tx: &Sender<Effect>) -> Result<()> {
     debug!("event: {:?}", event);
 
@@ -24,12 +28,15 @@ pub fn update(core: &Core, event: Event, tx: &Sender<Effect>) -> Result<()> {
     Ok(())
 }
 
+/// # Errors
+///
+/// Can error in many scenarios.
 pub fn process_effect(core: &Core, effect: Effect, tx: &Sender<Effect>) -> Result<()> {
     debug!("effect: {:?}", effect);
 
     match effect {
         render @ Effect::Render(_) => {
-            tx.send(render).map_err(|e| anyhow!("{e:?}"))?;
+            tx.send(render).map_err(|e| eyre!("{e:?}"))?;
         }
 
         Effect::Http(mut request) => {
