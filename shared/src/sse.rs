@@ -8,19 +8,25 @@ use serde::{Deserialize, Serialize, de::DeserializeOwned};
 
 use crux_core::{Request, capability::Operation, command::StreamBuilder};
 
+/// LOL.
 #[derive(Facet, Serialize, Deserialize, Clone, Debug, PartialEq, Eq)]
 pub struct SseRequest {
+    /// LOL.
     pub url: String,
 }
 
-#[derive(Facet, Serialize, Deserialize, Debug, PartialEq, Eq)]
+/// LOL.
 #[repr(C)]
+#[derive(Facet, Serialize, Deserialize, Debug, PartialEq, Eq)]
 pub enum SseResponse {
+    /// LOL.
     Chunk(Vec<u8>),
+    /// LOL.
     Done,
 }
 
 impl SseResponse {
+    /// LOL.
     #[must_use]
     pub const fn is_done(&self) -> bool {
         matches!(self, Self::Done)
@@ -31,9 +37,11 @@ impl Operation for SseRequest {
     type Output = SseResponse;
 }
 
+/// SSE bullshit.
 pub struct ServerSentEvents;
 
 impl ServerSentEvents {
+    /// LOL.
     pub fn get<Effect, Event, T>(
         url: impl Into<String>,
     ) -> StreamBuilder<Effect, Event, impl Stream<Item = T>>
@@ -57,7 +65,7 @@ impl ServerSentEvents {
                 .filter_map(|sse_event| async {
                     sse_event.ok().and_then(|event| match event {
                         SseEvent::Message(msg) => serde_json::from_slice(msg.data()).ok(),
-                        SseEvent::Retry(_) => None, // do we need to worry about this?
+                        SseEvent::Retry(_) => None, // Do we need to worry about this?
                     })
                 })
         })

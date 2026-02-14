@@ -101,7 +101,6 @@ impl Tui {
             self.event_tx.clone(),
             self.cancellation_token.clone(),
             self.tick_rate,
-            self.frame_rate,
         );
         self.task = tokio::spawn(async {
             event_loop.await;
@@ -112,12 +111,11 @@ impl Tui {
         event_tx: UnboundedSender<Event>,
         cancellation_token: CancellationToken,
         tick_rate: f64,
-        frame_rate: f64,
     ) {
         let mut event_stream = EventStream::new();
         let mut tick_interval = interval(Duration::from_secs_f64(1.0 / tick_rate));
 
-        // if this fails, then it's likely a bug in the calling code
+        // If this fails, then it's likely a bug in the calling code.
         event_tx
             .send(Event::Init)
             .expect("failed to send init event");
@@ -139,11 +137,11 @@ impl Tui {
 
                     }
                     Some(Err(_)) => Event::Error,
-                    None => break, // the event stream has stopped and will not produce any more events
+                    None => break, // The event stream has stopped and will not produce any more events.
                 },
             };
             if event_tx.send(event).is_err() {
-                // the receiver has been dropped, so there's no point in continuing the loop
+                // The receiver has been dropped, so there's no point in continuing the loop.
                 break;
             }
         }

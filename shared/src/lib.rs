@@ -1,4 +1,4 @@
-//! Lmoa
+//! The Shared application library crate that exposes the core.
 //!
 //!
 //!

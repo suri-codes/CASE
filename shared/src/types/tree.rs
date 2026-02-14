@@ -4,6 +4,8 @@ use serde::{Deserialize, Serialize};
 
 use crate::types::{Group, Task};
 
+/// The core data structure for the CASE application.
+/// Stores groups and tasks in nodes.
 #[derive(Debug, Serialize, Deserialize, Hydrate, Reconcile)]
 pub struct CaseTree {
     tree: Tree<CaseNode>,

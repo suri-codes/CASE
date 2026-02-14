@@ -5,6 +5,7 @@ use serde::{Deserialize, Serialize};
 
 use crate::types::{DueDateTime, Priority};
 
+/// Represents a `Task`
 #[derive(Debug, Serialize, Deserialize, Hydrate, Reconcile, PartialEq, Eq)]
 pub struct Task {
     name: String,
