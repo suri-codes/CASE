@@ -1,7 +1,7 @@
 use std::ops::Deref;
 
-use autosurgeon::{reconcile::NoKey, Hydrate, Reconcile};
-use chrono::{format::StrftimeItems, NaiveDateTime};
+use autosurgeon::{Hydrate, Reconcile, reconcile::NoKey};
+use chrono::{NaiveDateTime, format::StrftimeItems};
 use serde::{Deserialize, Serialize};
 
 /// Representation of a Due Date.
@@ -72,7 +72,7 @@ impl Deref for DueDateTime {
 #[cfg(test)]
 mod tests {
     use automerge::AutoCommit;
-    use autosurgeon::{hydrate, reconcile, Hydrate, Reconcile};
+    use autosurgeon::{Hydrate, Reconcile, hydrate, reconcile};
     use chrono::{NaiveDate, NaiveDateTime, NaiveTime};
 
     use super::DueDateTime;

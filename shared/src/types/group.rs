@@ -6,6 +6,7 @@ use serde::{Deserialize, Serialize};
 use crate::types::Priority;
 
 #[derive(Debug, Serialize, Deserialize, Hydrate, Reconcile, PartialEq, Eq)]
+/// Represents a `Group`.
 pub struct Group {
     name: String,
     priority: Priority,

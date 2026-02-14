@@ -25,6 +25,19 @@ pub fn get_config_dir() -> PathBuf {
     })
 }
 
+/// Will return the config file if it exists in the config directory.
+#[must_use]
+pub fn get_config_file() -> Option<PathBuf> {
+    let file = {
+        let mut dir = get_config_dir();
+        dir.push("config.toml");
+
+        dir
+    };
+
+    file.canonicalize().ok()
+}
+
 /// Returns the directory that holds data for the app.
 pub fn get_data_dir() -> PathBuf {
     DATA_FOLDER.clone().unwrap_or_else(|| {
