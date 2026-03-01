@@ -7,7 +7,7 @@ clean:
     cargo clean
 
 tui: 
-    just tui/run
+    just case-tui/run
 
 app:
     just iOS/dev

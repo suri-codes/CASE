@@ -1,8 +1,8 @@
 
-default: dev
+default: run
     
 
-dev:
+run:
     cargo run
 
 release:
